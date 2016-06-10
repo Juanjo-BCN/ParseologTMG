@@ -15,4 +15,4 @@ You can also embed plots, for example:
 datoslog <- getDF()
 ```
 
-Tenemos un data frame dew `r nrow(datoslog)` filas.
+Tenemos un data frame de `r nrow(datoslog)` filas.
