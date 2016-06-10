@@ -91,6 +91,20 @@ getNombrePaisbyIP <- function(ip , paises) {
   }
 }
 
-DataFrame_Nombre_Pais <- apply(X = LogTMG, MARGIN = 1, FUN = function(x) getPaisbyIP(x["ip_numero"], paises))
-DataFrame_codigo_Pais <- apply(X = LogTMG, MARGIN = 1, FUN = function(x) getIdbyIP(x["ip_numero"], paises))
-LogTMG <- cbind(LogTMG, DataFrame_codigo_Pais, DataFrame_Nombre_Pais)
+
+#' Funcion que devuelve Data Frame con Log TMG y codigo y nombre de pais asignado a IP
+#' 
+#' This funcion return a Data Frame with the (\emph{country}) and the (\emph{country iso code}) assigned to an (\emph{IP})
+#' @param data.frame with Log, data.frame with IP range, iso code country and country name
+#' @return Dta Frame with the Log completed with country name and country iso code
+#' @export
+#' @example 
+#' getPaisbyIP(1371073096, countries)
+
+Agregacodigos <- function(LogTMG, Agregado) {
+  paises <- Agregado[Agregado$country_iso_code %in% c("ES","CN","RU"),]
+  DataFrame_Nombre_Pais <- apply(X = LogTMG, MARGIN = 1, FUN = function(x) getPaisbyIP(x["ip_numero"], paises))
+  DataFrame_codigo_Pais <- apply(X = LogTMG, MARGIN = 1, FUN = function(x) getIdbyIP(x["ip_numero"], paises))
+  LogTMG <- cbind(LogTMG, DataFrame_codigo_Pais, DataFrame_Nombre_Pais)
+  return(LogTMG)
+}
